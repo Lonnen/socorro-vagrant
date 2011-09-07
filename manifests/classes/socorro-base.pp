@@ -265,7 +265,7 @@ class socorro-python inherits socorro-base {
             cwd => '/home/socorro/dev',
             timeout => '3600',
             user => 'socorro',
-            require => Package['subversion'],
+            require => Package['git-core'],
     }
 
     exec {

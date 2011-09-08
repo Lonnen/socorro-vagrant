@@ -1,16 +1,16 @@
 class socorro-db inherits socorro-base {
     package {
-	'postgresql-9.0':
+	'postgresql-9.1':
             alias => 'postgresql',
             require => [Exec['update-postgres-ppa'], Exec['apt-get-update']],
 	    ensure => 'present';
 
-	'postgresql-plperl-9.0':
+	'postgresql-plperl-9.1':
             alias => 'postgresql-plperl',
             require => Package['postgresql'],
 	    ensure => 'present';
 
-	'postgresql-contrib-9.0':
+	'postgresql-contrib-9.1':
             alias => 'postgresql-contrib',
             require => Package['postgresql'],
 	    ensure => 'present';
@@ -53,12 +53,6 @@ class socorro-db inherits socorro-base {
             alias => 'grant-breakpad-access',
             user => 'postgres',
             require => Exec['create-breakpad-roles'];
-    }
-
-    exec {
-        '/usr/bin/psql breakpad < /usr/share/postgresql/9.0/contrib/citext.sql':
-            user => 'postgres',
-            require => [Exec['create-breakpad-db'], Package['postgresql-contrib']];
     }
 
     exec {
@@ -130,12 +124,6 @@ class socorro-db inherits socorro-base {
             alias => 'grant-test-access',
             user => 'postgres',
             require => Exec['create-test-role'];
-    }
-
-    exec {
-        '/usr/bin/psql test < /usr/share/postgresql/9.0/contrib/citext.sql':
-            user => 'postgres',
-            require => [Exec['create-test-db'], Package['postgresql-contrib']];
     }
 
     exec {

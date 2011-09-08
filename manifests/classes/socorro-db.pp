@@ -91,7 +91,8 @@ class socorro-db inherits socorro-base {
             alias => 'insert-productdims',
             unless => '/usr/bin/psql -c "select id from productdims where id = \'1\'" breakpad | grep " 1"',
             user => 'postgres',
-            require => Exec['setup-schema'];
+            require => Exec['setup-schema'],
+            logoutput => true;
     }
 
     exec {
@@ -99,7 +100,8 @@ class socorro-db inherits socorro-base {
             alias => 'insert-product_visibility',
             unless => '/usr/bin/psql -c "select productdims_id from product_visibility where productdims_id = \'1\'" breakpad | grep " 1"',
             user => 'postgres',
-            require => Exec['insert-productdims'];
+            require => Exec['insert-productdims'],
+            logoutput => true;
     }
 
 
